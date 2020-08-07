@@ -5,18 +5,20 @@
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/splashFragment">
 
-    <action
-        android:id="@+id/xml_self"
-        app:destination="@id/nav_graph.xml"
-        app:launchSingleTop="true" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.clay.covid_19helper.ui.fragments.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash"
+        >
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"

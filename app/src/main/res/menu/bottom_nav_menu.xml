@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/heatMapFragment"
-        android:icon="@drawable/ic_map"
+        android:icon="@drawable/ic_india"
         android:title="Heat Map"/>
 
     <item
         android:id="@+id/worldDataFragment"
-        android:icon="@drawable/ic_world"
+        android:icon="@drawable/ic_internet"
         android:title="World Data"/>
 
 
