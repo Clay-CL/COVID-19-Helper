@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/splashFragment">
+
+    <action
+        android:id="@+id/xml_self"
+        app:destination="@id/nav_graph.xml"
+        app:launchSingleTop="true" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.clay.covid_19helper.ui.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.clay.covid_19helper.ui.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/heatMapFragment"
+        android:name="com.clay.covid_19helper.ui.fragments.HeatMapFragment"
+        android:label="fragment_heat_map"
+        tools:layout="@layout/fragment_heat_map" />
+    <fragment
+        android:id="@+id/worldDataFragment"
+        android:name="com.clay.covid_19helper.ui.fragments.WorldDataFragment"
+        android:label="fragment_world_data"
+        tools:layout="@layout/fragment_world_data" />
+
+
+</navigation>
