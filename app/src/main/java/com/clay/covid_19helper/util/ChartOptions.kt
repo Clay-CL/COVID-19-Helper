@@ -4,6 +4,10 @@ enum class Metric {
     NEGATIVE, POSITIVE, DEATH
 }
 
+enum class Increase {
+    DAILY, TOTAL
+}
+
 enum class TimeScale(val numDays: Int) {
     WEEK(7),
     MONTH(30),

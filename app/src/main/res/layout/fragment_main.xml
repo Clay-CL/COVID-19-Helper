@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.MainFragment"
-    android:background="@color/white">
-
+    android:background="@color/white"
+    tools:context=".ui.fragments.MainFragment">
 
 
     <TextView
@@ -24,21 +23,20 @@
         app:layout_constraintVertical_bias="0.0" />
 
 
-
     <org.angmarch.views.NiceSpinner
         android:id="@+id/stateSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        app:layout_constraintBottom_toTopOf="@+id/radioGrpCasesType"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintBottom_toTopOf="@+id/radioGrpCasesType"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvSize"
-        app:layout_constraintTop_toBottomOf="@id/covidToolbar"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <RadioGroup
         android:id="@+id/radioGrpCasesType"
@@ -59,14 +57,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:text="@string/negative" />
+            android:text="Recovered" />
 
         <RadioButton
             android:id="@+id/radioButtonPositive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:text="@string/positive" />
+            android:text="Confirmed" />
 
         <RadioButton
             android:id="@+id/radioButtonDeaths"
@@ -78,31 +76,63 @@
     </RadioGroup>
 
 
-    <com.robinhood.spark.SparkView
-        android:id="@+id/sparkChart"
+    <RadioGroup
+        android:id="@+id/dailyCumulativeToggle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/radioGrpDuration"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorBackgroundShade"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGrpCasesType"
-        android:background="@color/colorBackgroundShade"/>
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/radioButtonDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Daily" />
+
+        <RadioButton
+            android:id="@+id/radioButtonTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Total" />
+
+    </RadioGroup>
+
+    <com.robinhood.spark.SparkView
+        android:id="@+id/sparkChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorBackgroundShade"
+        app:layout_constraintBottom_toTopOf="@id/radioGrpDuration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dailyCumulativeToggle" />
 
     <TextView
         android:id="@+id/tvTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/selectedBackground"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/sparkChart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="@+id/sparkChart"
         app:layout_constraintTop_toTopOf="@+id/sparkChart"
-        app:layout_constraintVertical_bias="0.01"
-        android:textColor="@color/selectedBackground"
-        android:visibility="visible"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+        app:layout_constraintVertical_bias="0.01" />
 
     <RadioGroup
         android:id="@+id/radioGrpDuration"
@@ -161,12 +191,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center"
-        app:layout_constraintVertical_bias="0.5"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dateLabel"
         app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintVertical_bias="0.5"
         tools:text="24,500" />
 
     <androidx.constraintlayout.widget.Guideline

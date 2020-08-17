@@ -11,6 +11,11 @@ import com.clay.covid_19helper.R
 import com.clay.covid_19helper.ui.MainActivity
 import com.clay.covid_19helper.ui.MainViewModel
 import com.clay.covid_19helper.util.Resource
+import kotlinx.android.synthetic.main.fragment_splash.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 const val DIALOG_TAG = "DIALOG_TAG"
 
@@ -19,7 +24,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     lateinit var viewModel: MainViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
 
         if (savedInstanceState != null) {
@@ -46,6 +50,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
         }
 
+        // using nationalData since that is the first thing to be displayed
+        // the others load asynchronously
         viewModel.nationalCovidData.observe(viewLifecycleOwner, Observer { resourceData ->
             when (resourceData) {
                 is Resource.Success -> {

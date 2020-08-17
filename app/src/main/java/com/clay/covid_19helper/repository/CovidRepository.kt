@@ -7,4 +7,11 @@ class CovidRepository {
 
     suspend fun getStateWiseTimelinedata() = RetrofitInstance.api.getStateWiseTimelinedata()
 
+    suspend fun getCountryList() = RetrofitInstance.apiWorld.getCountryList()
+
+    suspend fun getWorldData() = RetrofitInstance.apiWorld.getWorldData()
+
+    suspend fun getIndiaData() = RetrofitInstance.apiWorld.getIndiaData()
+
+
 }
