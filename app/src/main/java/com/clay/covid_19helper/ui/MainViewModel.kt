@@ -10,10 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.clay.covid_19helper.BaseApplication
 import com.clay.covid_19helper.R
-import com.clay.covid_19helper.models.CountryCovidData
-import com.clay.covid_19helper.models.CountryData
-import com.clay.covid_19helper.models.IndiaData
-import com.clay.covid_19helper.models.StateTimelineData
+import com.clay.covid_19helper.models.*
 import com.clay.covid_19helper.repository.CovidRepository
 import com.clay.covid_19helper.util.Increase
 import com.clay.covid_19helper.util.Metric
@@ -24,6 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
+import java.util.*
 
 class MainViewModel(app: Application, private val covidRepository: CovidRepository) :
     AndroidViewModel(app) {
@@ -35,6 +33,8 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
     val countryListData: MutableLiveData<Resource<CountryData>> = MutableLiveData()
 
     val worldData: MutableLiveData<Resource<CountryCovidData>> = MutableLiveData()
+
+    val worldDataStack: MutableLiveData<Stack<CountryCovidDataItem>> = MutableLiveData()
 
     val indiaData: MutableLiveData<Resource<CountryCovidData>> = MutableLiveData()
 
@@ -206,11 +206,26 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
 
     private fun handleWorldDataResponse(response: Response<CountryCovidData>): Resource<CountryCovidData>? {
         if (response.isSuccessful) {
-            response.body()?.let {
-                return Resource.Success(it)
+            response.body()?.let { countryData ->
+//                val data = CountryCovidData()
+//                countryData.forEach {
+//                    if( it.lat != null || it.long!= null){
+//                        data.add(it)
+//                    }
+//                }
+                addDataToStack(countryData)
+                return Resource.Success(countryData)
             }
         }
         return Resource.Error(response.message())
+    }
+
+    private fun addDataToStack(countryData: CountryCovidData) {
+        val myStack = Stack<CountryCovidDataItem>()
+        countryData.forEach {
+            myStack.push(it)
+        }
+        worldDataStack.postValue(myStack)
     }
 
 

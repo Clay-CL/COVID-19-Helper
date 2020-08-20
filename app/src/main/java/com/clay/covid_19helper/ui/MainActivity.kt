@@ -28,9 +28,13 @@ class MainActivity : AppCompatActivity() {
 
         myHostFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.mainFragment, R.id.heatMapFragment, R.id.worldDataFragment -> {
+                R.id.mainFragment, R.id.heatMapFragment -> {
                     bottomNavView.visibility = View.VISIBLE
                     covidToolbar.visibility = View.VISIBLE
+                }
+                R.id.worldDataFragment -> {
+                    bottomNavView.visibility = View.VISIBLE
+                    covidToolbar.visibility = View.GONE
                 }
                 else -> {
                     bottomNavView.visibility = View.GONE

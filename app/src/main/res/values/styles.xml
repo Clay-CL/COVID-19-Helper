@@ -32,4 +32,9 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
 
+    <style name="MySearchBar" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@null</item>
+    </style>
+
+
 </resources>
