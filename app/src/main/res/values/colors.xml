@@ -7,10 +7,17 @@
     <color name="colorPositiveIncrease">#3F51B5</color>
     <color name="colorNegativeIncrease">#4CAF50</color>
     <color name="colorDeathIncrease">#F44336</color>
+
+    <color name="colorPositiveIncreaseWorld">#8C3F51B5</color>
+    <color name="colorNegativeIncreaseWorld">#8C4CAF50</color>
+    <color name="colorDeathIncreaseWorld">#8CF44336</color>
+
     <color name="white">#FFFFFF</color>
     <color name="colorBackgroundShade">#EBEEF6</color>
     <color name="grey">#F0F0F0</color>
     <color name="selectedBackground">#8C89C1</color>
+
+    <color name="gray_pill">#AFAFAF</color>
 
     <color name="myColorSurface">@color/white</color>
 </resources>

@@ -9,11 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.clay.covid_19helper.BaseApplication
-import com.clay.covid_19helper.R
-import com.clay.covid_19helper.models.CountryCovidData
-import com.clay.covid_19helper.models.CountryData
-import com.clay.covid_19helper.models.IndiaData
-import com.clay.covid_19helper.models.StateTimelineData
+import com.clay.covid_19helper.models.*
 import com.clay.covid_19helper.repository.CovidRepository
 import com.clay.covid_19helper.util.Increase
 import com.clay.covid_19helper.util.Metric
@@ -24,6 +20,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
+import java.util.*
+import java.util.Collections.sort
+import kotlin.collections.ArrayList
 
 class MainViewModel(app: Application, private val covidRepository: CovidRepository) :
     AndroidViewModel(app) {
@@ -34,7 +33,7 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
 
     val countryListData: MutableLiveData<Resource<CountryData>> = MutableLiveData()
 
-    val worldData: MutableLiveData<Resource<CountryCovidData>> = MutableLiveData()
+    val worldData: MutableLiveData<Resource<WorldCountriesCovidData>> = MutableLiveData()
 
     val indiaData: MutableLiveData<Resource<CountryCovidData>> = MutableLiveData()
 
@@ -45,6 +44,8 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
     val increase: MutableLiveData<Increase> = MutableLiveData()
 
     val selectedState: MutableLiveData<Int> = MutableLiveData()
+
+    val worldDataStack: MutableLiveData<ArrayList<WorldCountryCovidData>> = MutableLiveData()
 
     init {
         getNationalCovidData()
@@ -204,13 +205,25 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
         }
     }
 
-    private fun handleWorldDataResponse(response: Response<CountryCovidData>): Resource<CountryCovidData>? {
+    private fun handleWorldDataResponse(response: Response<WorldCountriesCovidData>): Resource<WorldCountriesCovidData>? {
         if (response.isSuccessful) {
             response.body()?.let {
+                addToWorldStatck(it)
+                sort(it.data) { o1, o2 ->
+                    o1.location.compareTo(o2.location)
+                }
                 return Resource.Success(it)
             }
         }
         return Resource.Error(response.message())
+    }
+
+    fun addToWorldStatck(worldCountriesCovidData: WorldCountriesCovidData) {
+        val arrayList = arrayListOf<WorldCountryCovidData>()
+        for(countryData in worldCountriesCovidData.data) {
+            arrayList.add(countryData)
+        }
+        worldDataStack.postValue(arrayList)
     }
 
 

@@ -1,9 +1,6 @@
 package com.clay.covid_19helper.api
 
-import com.clay.covid_19helper.models.CountryCovidData
-import com.clay.covid_19helper.models.CountryData
-import com.clay.covid_19helper.models.IndiaData
-import com.clay.covid_19helper.models.StateTimelineData
+import com.clay.covid_19helper.models.*
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -22,8 +19,11 @@ interface CovidApi {
     @GET("countries/")
     suspend fun getCountryList(): Response<CountryData>
 
-    @GET("confirmed/")
-    suspend fun getWorldData(): Response<CountryCovidData>
+//    @GET("confirmed/")
+//    suspend fun getWorldData(): Response<CountryCovidData>
+
+    @GET("api/countries")
+    suspend fun getWorldData(): Response<WorldCountriesCovidData>
 
     @GET("countries/India/confirmed/")
     suspend fun getIndiaData(): Response<CountryCovidData>

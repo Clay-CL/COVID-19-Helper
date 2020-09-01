@@ -17,20 +17,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
         val repository = CovidRepository()
         val viewModelProviderFactory = MainViewModelProviderFactory(application, repository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(MainViewModel::class.java)
+
+        setContentView(R.layout.activity_main)
 
         bottomNavView.setupWithNavController(myHostFragment.findNavController())
         bottomNavView.setOnNavigationItemReselectedListener { /* NO-OP */ }
 
         myHostFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.mainFragment, R.id.heatMapFragment, R.id.worldDataFragment -> {
+                R.id.mainFragment, R.id.heatMapFragment -> {
                     bottomNavView.visibility = View.VISIBLE
                     covidToolbar.visibility = View.VISIBLE
+                }
+                R.id.worldDataFragment -> {
+                    bottomNavView.visibility = View.VISIBLE
+                    covidToolbar.visibility = View.GONE
                 }
                 else -> {
                     bottomNavView.visibility = View.GONE

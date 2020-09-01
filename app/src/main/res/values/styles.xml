@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:radioButtonStyle">@style/CustomRadioButton</item>
         <item name="colorSurface">@color/myColorSurface</item>
+        <item name="fontFamily">@font/glacial_indifference</item>
     </style>
 
     <style name="CustomRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
@@ -31,5 +32,10 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
+
+    <style name="MySearchBar" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@null</item>
+    </style>
+
 
 </resources>

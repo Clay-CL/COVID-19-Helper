@@ -8,6 +8,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 
 import com.clay.covid_19helper.R
+import com.clay.covid_19helper.models.IndiaData
 import com.clay.covid_19helper.ui.MainActivity
 import com.clay.covid_19helper.ui.MainViewModel
 import com.clay.covid_19helper.util.Resource
@@ -47,7 +48,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                     (activity as MainActivity).onBackPressed()
                 }
             }
-
         }
 
         // using nationalData since that is the first thing to be displayed
@@ -59,22 +59,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                 }
                 is Resource.Error -> {
                     // create a dialog box with an error
-                    ErrorDialog().apply {
-                        title = "Something Went Wrong"
-                        resourceData.message?.let { msg ->
-                            this.message = msg
-                        }
-                        setYesListener {
-                            this.dismiss()
-                            parentFragmentManager.fragments.clear()
-                            viewModel.getNationalCovidData()
-
-                        }
-                        setNoListener {
-                            this.dismiss()
-                            (activity as MainActivity).onBackPressed()
-                        }
-                    }.show(parentFragmentManager, DIALOG_TAG)
+                    errorDialog(resourceData)
                 }
                 is Resource.Loading -> {
 
@@ -82,6 +67,25 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             }
         })
 
+    }
+
+    private fun errorDialog(resourceData: Resource.Error<IndiaData>) {
+        ErrorDialog().apply {
+            title = "Something Went Wrong"
+            resourceData.message?.let { msg ->
+                this.message = msg
+            }
+            setYesListener {
+                this.dismiss()
+                parentFragmentManager.fragments.clear()
+                viewModel.getNationalCovidData()
+
+            }
+            setNoListener {
+                this.dismiss()
+                (activity as MainActivity).onBackPressed()
+            }
+        }.show(parentFragmentManager, DIALOG_TAG)
     }
 
     private fun navigateToMainFragment(savedInstanceState: Bundle?) {
