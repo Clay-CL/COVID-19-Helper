@@ -247,6 +247,9 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
     private fun handleIndiaDataResponse(response: Response<CountryCovidData>): Resource<CountryCovidData>? {
         if (response.isSuccessful) {
             response.body()?.let {
+                sort(it) { o1, o2 ->
+                    o2?.provinceState?.let { it1 -> o1?.provinceState?.compareTo(it1) }!!
+                }
                 return Resource.Success(it)
             }
         }
@@ -259,8 +262,8 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
     private fun hasInternetConnection(): Boolean {
         //we need the connectivity manager
         // we don't necessarily need activity context
-        // we can even use application context here as
-        // as long as the app lives
+        // we can even use application context here assam
+        // assam long assam the app lives
         // the applicationContext is not null
         val connectivityManager = getApplication<BaseApplication>()
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

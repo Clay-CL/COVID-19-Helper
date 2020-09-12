@@ -9,6 +9,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,9 +52,9 @@ class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCall
     var myAsyncTask: MapAsyncTask? = null
 
     private var map: GoogleMap? = null
-    var orgHeight = 0
-    var orgWidth = 0
-    var orgTop = 0
+    private var orgHeight = 0
+    private var orgWidth = 0
+    private var orgTop = 0
     private var toggle = false
 
     private var isMapReady = false
@@ -78,20 +79,18 @@ class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCall
         mapView?.getMapAsync(this)
         map?.setOnCameraMoveListener(this)
 
-        GoogleMap.MAP_TYPE_NORMAL
-
         setUpEventListeners()
         setUpRecyclerView()
 
     }
 
     private fun setUpRecyclerView() {
-        countryListAdapter = CountryListAdapter(requireContext(), this).apply {
-            worldCountriesCovidData = viewModel.worldData.value?.data
-            collapseFun = {
-                onItemSelected(it)
+        countryListAdapter =
+            CountryListAdapter(requireContext(), this, viewModel.worldData.value?.data!!).apply {
+                collapseFun = {
+                    onItemSelected(it)
+                }
             }
-        }
         countryList.apply {
             adapter = countryListAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -131,11 +130,18 @@ class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCall
 //            )
 //        )
 
+        try {
+            map?.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    countries_bb[country.countryCode.toUpperCase(Locale.ROOT)],
+                    1
+                )
+            )
+        }catch (e: Exception){
 
-        map?.animateCamera(CameraUpdateFactory.newLatLngBounds(
-            countries_bb[country.countryCode.toUpperCase(Locale.ROOT)],
-            1
-        ))
+        }
+
+
 
     }
 
@@ -162,6 +168,10 @@ class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCall
                 }
 
             }
+        }
+
+        searchText.doOnTextChanged { text, _, _, _ ->
+            countryListAdapter.filter.filter(text)
         }
 
         icAction.setOnClickListener {

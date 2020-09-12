@@ -7,6 +7,21 @@
     <color name="colorPositiveIncrease">#3F51B5</color>
     <color name="colorNegativeIncrease">#4CAF50</color>
     <color name="colorDeathIncrease">#F44336</color>
+    
+    <color name="positive_val_1">#3949AB</color>
+    <color name="positive_val_2">#973949AB</color>
+    <color name="positive_val_3">#4F3949AB</color>
+    <color name="positive_val_4">#173949AB</color>
+
+    <color name="negative_val_1">#4CAF50</color>
+    <color name="negative_val_2">#974CAF50</color>
+    <color name="negative_val_3">#4F4CAF50</color>
+    <color name="negative_val_4">#174CAF50</color>
+
+    <color name="death_val_1">#F44336</color>
+    <color name="death_val_2">#C8F44336</color>
+    <color name="death_val_3">#7EF44336</color>
+    <color name="death_val_4">#36F44336</color>
 
     <color name="colorPositiveIncreaseWorld">#8C3F51B5</color>
     <color name="colorNegativeIncreaseWorld">#8C4CAF50</color>
@@ -20,4 +35,8 @@
     <color name="gray_pill">#AFAFAF</color>
 
     <color name="myColorSurface">@color/white</color>
+
+    <color name="blue">#0000FF</color>
+
+    <color name="black">#000</color>
 </resources>

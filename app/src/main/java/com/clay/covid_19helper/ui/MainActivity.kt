@@ -9,8 +9,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.clay.covid_19helper.R
 import com.clay.covid_19helper.repository.CovidRepository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: MainViewModel
@@ -28,11 +30,11 @@ class MainActivity : AppCompatActivity() {
 
         myHostFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.mainFragment, R.id.heatMapFragment -> {
+                R.id.mainFragment, R.id.newsFragment -> {
                     bottomNavView.visibility = View.VISIBLE
                     covidToolbar.visibility = View.VISIBLE
                 }
-                R.id.worldDataFragment -> {
+                R.id.worldDataFragment, R.id.heatMapFragment -> {
                     bottomNavView.visibility = View.VISIBLE
                     covidToolbar.visibility = View.GONE
                 }

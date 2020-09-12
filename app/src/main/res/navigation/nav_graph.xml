@@ -35,6 +35,11 @@
         android:name="com.clay.covid_19helper.ui.fragments.WorldDataFragment"
         android:label="fragment_world_data"
         tools:layout="@layout/fragment_world_data" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.clay.covid_19helper.ui.fragments.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" />
 
 
 </navigation>

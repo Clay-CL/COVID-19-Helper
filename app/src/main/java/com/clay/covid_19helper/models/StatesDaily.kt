@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName
 data class StatesDaily(
     @SerializedName("an")
     val an: String,
-    @SerializedName("ap")
+    @SerializedName("andhra_pradesh")
     val ap: String,
-    @SerializedName("ar")
+    @SerializedName("arunachal_pradesh")
     val ar: String,
-    @SerializedName("as")
+    @SerializedName("assam")
     val asX: String,
     @SerializedName("br")
     val br: String,

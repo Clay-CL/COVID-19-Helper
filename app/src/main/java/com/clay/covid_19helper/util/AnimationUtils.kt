@@ -1,10 +1,21 @@
 package com.clay.covid_19helper.util
 
+import android.R
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.Interpolator
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import timber.log.Timber
+import kotlin.math.hypot
+
 
 object AnimationUtils {
 
@@ -33,7 +44,7 @@ object AnimationUtils {
         onlyList: Boolean
     ) {
 
-        if(onlyList){
+        if (onlyList) {
             expandRecyclerView(duration, parent_container.height)
             return
         }
@@ -149,6 +160,33 @@ object AnimationUtils {
             requestLayout()
         }
         va.start()
+    }
+
+
+    fun View.expandCircle() {
+        val cx = width / 2
+        val cy = height / 2
+        val finalRadius =
+            hypot(cx.toDouble(), cy.toDouble()).toFloat()
+        val anim =
+            ViewAnimationUtils.createCircularReveal(this, cx, cy, 0f, finalRadius)
+        visibility = VISIBLE
+        anim.interpolator = AccelerateInterpolator()
+        anim.start()
+    }
+
+    fun View.shrinkCircle() {
+        val cx = width / 2
+        val cy = height / 2
+        val initialRadius =
+            hypot(cx.toDouble(), cy.toDouble()).toFloat()
+        val anim =
+            ViewAnimationUtils.createCircularReveal(this, cx, cy, initialRadius, 0f)
+        anim.doOnEnd {
+            visibility = GONE
+        }
+        anim.interpolator = AccelerateDecelerateInterpolator()
+        anim.start()
     }
 
 

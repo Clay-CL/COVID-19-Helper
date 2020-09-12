@@ -1,11 +1,20 @@
 package com.clay.covid_19helper.util
 
+import com.clay.covid_19helper.R
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
 object Constants {
 
+    const val COVID_QUERY: String = "coronavirus OR covid-19"
+
     const val BASE_URL = "https://api.covid19india.org"
+
+    const val NEWS_BASE_URL = "https://newsapi.org"
+
+    const val SEARCH_NEWS_TIME_DELAY = 500L
+
+    const val QUERY_PAGE_SIZE = 20
 
     const val WORLD_API_BASE_URL = "https://covid19.mathdro.id/api/"
 
@@ -995,6 +1004,46 @@ object Constants {
                 "ZW",
                 LatLngBounds(LatLng(-22.4241096, 25.2373), LatLng(-15.6097033, 33.0683413))
             )
+        }
+    }
+
+    val indian_regions = object : HashMap<String, Int>(){
+        init {
+            put("Andhra Pradesh", R.raw.andhra_pradesh)
+            put("Andaman and Nicobar Islands", R.raw.andaman_nicobar)
+            put("Arunachal Pradesh", R.raw.arunachal_pradesh)
+            put("Assam",R.raw.assam)
+            put("Bihar", R.raw.bihar)
+            put("Chandigarh", R.raw.chandigarh)
+            put("Chhattisgarh", R.raw.chhattisgarh)
+            put("Dadra and Nagar Haveli and Daman and Diu", R.raw.daman)
+            put("Delhi", R.raw.delhi)
+            put("Goa", R.raw.goa)
+            put("Gujarat", R.raw.gujarat)
+            put("Haryana", R.raw.haryana)
+            put("Himachal Pradesh", R.raw.himachal_pradesh)
+            put("Jammu and Kashmir", R.raw.jammu_kashmir)
+            put("Jharkhand", R.raw.jharkhand)
+            put("Karnataka", R.raw.karnataka)
+            put("Kerala", R.raw.kerala)
+            put("Ladakh", R.raw.ladakh)
+            put("Madhya Pradesh", R.raw.madhya_pradesh)
+            put("Maharashtra", R.raw.maharastra)
+            put("Manipur", R.raw.manipur)
+            put("Meghalaya", R.raw.meghalaya)
+            put("Mizoram", R.raw.mizoram)
+            put("Nagaland", R.raw.nagaland)
+            put("Odisha", R.raw.odisha)
+            put("Puducherry", R.raw.puducherry)
+            put("Punjab", R.raw.punjab)
+            put("Rajasthan", R.raw.rajasthan)
+            put("Sikkim", R.raw.sikkim)
+            put("Tamil Nadu", R.raw.tamil_nadu)
+            put("Telangana", R.raw.telangana)
+            put("Tripura", R.raw.tripura)
+            put("Uttar Pradesh", R.raw.uttar_pradesh)
+            put("Uttarakhand", R.raw.uttarakhand)
+            put("West Bengal", R.raw.west_bengal)
         }
     }
 

@@ -16,6 +16,11 @@
         android:icon="@drawable/ic_internet"
         android:title="World Data"/>
 
+    <item
+        android:id="@+id/newsFragment"
+        android:icon="@drawable/ic_newspaper"
+        android:title="News"/>
+
 
 
 </menu>
