@@ -1,5 +1,6 @@
 package com.clay.covid_19helper.ui.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,7 +78,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     var isLastPage = false
     var isScrolling = false
 
-    val scrollListener = object : RecyclerView.OnScrollListener() {
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
@@ -106,7 +108,12 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     }
 
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter().apply {
+            setOnItemClickedListener { article ->
+                val customTabsIntent = CustomTabsIntent.Builder().build()
+                customTabsIntent.launchUrl(requireContext(), Uri.parse(article.url))
+            }
+        }
         rvNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)

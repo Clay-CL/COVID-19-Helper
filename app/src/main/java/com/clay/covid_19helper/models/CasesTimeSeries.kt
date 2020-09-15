@@ -1,21 +1,22 @@
 package com.clay.covid_19helper.models
 
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class CasesTimeSeries(
     @SerializedName("dailyconfirmed")
-    val dailyconfirmed: String,
+    var dailyconfirmed: String,
     @SerializedName("dailydeceased")
-    val dailydeceased: String,
+    var dailydeceased: String,
     @SerializedName("dailyrecovered")
-    val dailyrecovered: String,
+    var dailyrecovered: String,
     @SerializedName("date")
-    val date: String,
+    var date: String,
     @SerializedName("totalconfirmed")
-    val totalconfirmed: String,
+    var totalconfirmed: String?,
     @SerializedName("totaldeceased")
-    val totaldeceased: String,
+    var totaldeceased: String?,
     @SerializedName("totalrecovered")
-    val totalrecovered: String
+    var totalrecovered: String?
 )

@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide
 import com.clay.covid_19helper.R
 import com.clay.covid_19helper.models.newsmodels.Article
 import kotlinx.android.synthetic.main.item_article_preview.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
@@ -38,16 +40,18 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun getItemCount() = differ.currentList.size
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val article = differ.currentList.get(position)
+        val article = differ.currentList[position]
         holder.itemView.apply {
             Glide.with(this).load(article.urlToImage).into(ivArticleImage)
             tvSource.text = article.source?.name
             tvTitle.text = article.title
             tvDescription.text = article.description
-            tvPublishedAt.text = article.publishedAt
+            val rawDate = article.publishedAt
+            val date = rawDate.split("T")[0]
+            tvPublishedAt.text = date
             setOnClickListener {
-                onItemClickedListener?.let{
-                    //it(article)
+                onItemClickedListener?.let{listener->
+                    listener(article)
                 }
             }
         }

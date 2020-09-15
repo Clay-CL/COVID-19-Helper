@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 import java.util.Collections.sort
@@ -46,6 +47,10 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
     val selectedState: MutableLiveData<Int> = MutableLiveData()
 
     val worldDataStack: MutableLiveData<ArrayList<WorldCountryCovidData>> = MutableLiveData()
+
+    val listOfStates = MutableLiveData<List<String>>()
+
+    val mappingStatesCases = MutableLiveData<Map<Int, List<CasesTimeSeries>>>()
 
     init {
         getNationalCovidData()
@@ -124,8 +129,8 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
 
     private fun handleNationalCovidDataResponse(response: Response<IndiaData>): Resource<IndiaData>? {
         if (response.isSuccessful) {
-            response.body()?.let {
-                return Resource.Success(it)
+            response.body()?.let { indiaData ->
+                return Resource.Success(indiaData)
             }
         }
         return Resource.Error(response.message())
@@ -150,8 +155,9 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
 
     private fun handleStateWiseCovidDataResponse(response: Response<StateTimelineData>): Resource<StateTimelineData>? {
         if (response.isSuccessful) {
-            response.body()?.let {
-                return Resource.Success(it)
+            response.body()?.let { stateTimelineData ->
+                Timber.d("Association : ${stateTimelineData.statesDaily.groupBy({ it.date }, { it })["14-Mar-20"]}")
+                return Resource.Success(stateTimelineData)
             }
         }
         return Resource.Error(response.message())
@@ -220,7 +226,7 @@ class MainViewModel(app: Application, private val covidRepository: CovidReposito
 
     fun addToWorldStatck(worldCountriesCovidData: WorldCountriesCovidData) {
         val arrayList = arrayListOf<WorldCountryCovidData>()
-        for(countryData in worldCountriesCovidData.data) {
+        for (countryData in worldCountriesCovidData.data) {
             arrayList.add(countryData)
         }
         worldDataStack.postValue(arrayList)

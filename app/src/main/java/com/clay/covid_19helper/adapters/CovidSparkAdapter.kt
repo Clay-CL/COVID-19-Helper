@@ -9,7 +9,7 @@ import com.robinhood.spark.SparkAdapter
 
 class CovidSparkAdapter : SparkAdapter() {
 
-    var dailyNationalData = listOf<CasesTimeSeries>()
+    var data = listOf<CasesTimeSeries>()
 
     var metric = Metric.POSITIVE
 
@@ -18,7 +18,7 @@ class CovidSparkAdapter : SparkAdapter() {
     var increase = Increase.DAILY
 
     override fun getY(index: Int): Float {
-        val chosenDayData = dailyNationalData[index]
+        val chosenDayData = data[index]
         when(increase) {
             Increase.DAILY -> {
                 return when (metric) {
@@ -32,14 +32,14 @@ class CovidSparkAdapter : SparkAdapter() {
                     Metric.NEGATIVE -> chosenDayData.totalrecovered
                     Metric.POSITIVE -> chosenDayData.totalconfirmed
                     Metric.DEATH -> chosenDayData.totaldeceased
-                }.toFloat()
+                }?.toFloat()!!
             }
         }
     }
 
-    override fun getItem(index: Int) = dailyNationalData[index]
+    override fun getItem(index: Int) = data[index]
 
-    override fun getCount() = dailyNationalData.size
+    override fun getCount() = data.size
 
     override fun getDataBounds(): RectF {
         val bounds = super.getDataBounds()

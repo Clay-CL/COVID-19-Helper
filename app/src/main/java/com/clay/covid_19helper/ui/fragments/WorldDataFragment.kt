@@ -6,8 +6,12 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorInt
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -23,11 +27,8 @@ import com.clay.covid_19helper.util.AnimationUtils.expandMap
 import com.clay.covid_19helper.util.AnimationUtils.expandToolbar
 import com.clay.covid_19helper.util.AnimationUtils.resetToolbar
 import com.clay.covid_19helper.util.AnimationUtils.shrinkMap
-import com.clay.covid_19helper.util.Constants
-import com.clay.covid_19helper.util.Constants.MAP_CAMERA_ZOOM
-import com.clay.covid_19helper.util.Constants.countries_bb
+import com.clay.covid_19helper.util.Constants.COUNTRIES_BOUDNING_BOX
 import com.clay.covid_19helper.util.Metric
-import com.clay.covid_19helper.util.MiscUtils.getZoomLevel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -36,10 +37,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import kotlinx.android.synthetic.main.fragment_world_data.*
+import kotlinx.android.synthetic.main.fragment_world_data.mapView
 import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.hypot
+import kotlin.math.max
 
 
 class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCallback,
@@ -133,7 +137,7 @@ class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCall
         try {
             map?.animateCamera(
                 CameraUpdateFactory.newLatLngBounds(
-                    countries_bb[country.countryCode.toUpperCase(Locale.ROOT)],
+                    COUNTRIES_BOUDNING_BOX[country.countryCode.toUpperCase(Locale.ROOT)],
                     1
                 )
             )
@@ -148,9 +152,9 @@ class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCall
     private fun setUpEventListeners() {
         icActionSettings.setOnClickListener {
             if (metric_container.visibility == View.VISIBLE) {
-                metric_container.visibility = View.GONE
+                hideMetricContainerAnim()
             } else {
-                metric_container.visibility = View.VISIBLE
+                showMetricContainerAnim()
             }
         }
 
@@ -230,6 +234,62 @@ class WorldDataFragment : Fragment(R.layout.fragment_world_data), OnMapReadyCall
 
         }
 
+    }
+
+    private fun showMetricContainerAnim() {
+        val xCenter = metric_container.right
+        val yCenter = metric_container.top
+
+        val startRadius = 0
+        val endRadius =
+            hypot(parent_container.width.toDouble(), parent_container.height.toDouble())
+
+        val revealAnim = ViewAnimationUtils.createCircularReveal(
+            metric_container,
+            xCenter, yCenter, startRadius.toFloat(), endRadius.toFloat()
+        )
+        metric_container.visibility = View.VISIBLE
+        revealAnim.interpolator = AccelerateInterpolator()
+        revealAnim.start()
+
+    }
+
+    private fun hideMetricContainerAnim() {
+        val xCenter = metric_container.right
+        val yCenter = metric_container.top
+
+        val startRadius = max(parent_container.width, parent_container.height)
+        val endRadius = 0
+
+        val hideAnim = ViewAnimationUtils.createCircularReveal(
+            metric_container,
+            xCenter, yCenter, startRadius.toFloat(), endRadius.toFloat()
+        )
+
+        hideAnim.doOnEnd {
+            metric_container.visibility = View.GONE
+        }
+        hideAnim.interpolator = AccelerateDecelerateInterpolator()
+
+//        val translateX = PropertyValuesHolder.ofFloat(
+//            View.TRANSLATION_X,
+//            icActionSettingsIndia.right - metricContainerIndia.right.toFloat()
+//        )
+//        val translateY = PropertyValuesHolder.ofFloat(
+//            View.TRANSLATION_Y,
+//            icActionSettingsIndia.top - metricContainerIndia.top.toFloat()
+//        )
+//
+//        val moveBackToOriginalPositionAnim =
+//            ObjectAnimator.ofPropertyValuesHolder(metricContainerIndia, translateX, translateY)
+//        moveBackToOriginalPositionAnim.interpolator = DecelerateInterpolator()
+//        moveBackToOriginalPositionAnim.duration = 50
+//
+//        moveBackToOriginalPositionAnim.doOnEnd {
+//            hideAnim.start()
+//        }
+
+        hideAnim.start()
     }
 
     private fun hideKeyBoard() {

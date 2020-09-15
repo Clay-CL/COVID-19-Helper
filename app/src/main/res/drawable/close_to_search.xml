@@ -37,16 +37,16 @@
             <set>
                 <objectAnimator
                     android:propertyName="trimPathStart"
-                    android:startOffset="205"
-                    android:duration="500"
+                    android:startOffset="97"
+                    android:duration="318"
                     android:valueFrom="0"
                     android:valueTo="0.48"
                     android:valueType="floatType"
                     android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                     android:propertyName="trimPathEnd"
-                    android:startOffset="205"
-                    android:duration="500"
+                    android:startOffset="97"
+                    android:duration="318"
                     android:valueFrom="0.86"
                     android:valueTo="1"
                     android:valueType="floatType"
@@ -58,8 +58,8 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="trimPathStart"
-                android:startOffset="134"
-                android:duration="314"
+                android:startOffset="39"
+                android:duration="286"
                 android:valueFrom="0"
                 android:valueTo="1"
                 android:valueType="floatType"
@@ -70,8 +70,8 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="trimPathStart"
-                android:startOffset="409"
-                android:duration="416"
+                android:startOffset="301"
+                android:duration="201"
                 android:valueFrom="1"
                 android:valueTo="0"
                 android:valueType="floatType"
@@ -83,16 +83,16 @@
             <set>
                 <objectAnimator
                     android:propertyName="translateX"
-                    android:startOffset="205"
-                    android:duration="500"
+                    android:startOffset="97"
+                    android:duration="318"
                     android:valueFrom="-6.7"
                     android:valueTo="0"
                     android:valueType="floatType"
                     android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                     android:propertyName="translateY"
-                    android:startOffset="205"
-                    android:duration="500"
+                    android:startOffset="97"
+                    android:duration="318"
                     android:valueFrom="-6.7"
                     android:valueTo="0"
                     android:valueType="floatType"

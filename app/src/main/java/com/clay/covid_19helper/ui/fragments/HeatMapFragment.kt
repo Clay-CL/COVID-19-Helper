@@ -1,5 +1,7 @@
 package com.clay.covid_19helper.ui.fragments
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.AsyncTask
@@ -11,6 +13,8 @@ import android.view.View.VISIBLE
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorInt
 import androidx.core.animation.doOnEnd
@@ -19,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.clay.covid_19helper.R
@@ -67,6 +72,8 @@ class HeatMapFragment : Fragment(R.layout.fragment_heat_map), OnMapReadyCallback
     private var toggleExpansion = false
 
     private var toggleLegendView = true
+
+    private var toggleMetricContainer = true
 
     private lateinit var provinceListAdapter: ProvinceListAdapter
 
@@ -224,6 +231,14 @@ class HeatMapFragment : Fragment(R.layout.fragment_heat_map), OnMapReadyCallback
 
         }
 
+        icActionSettingsIndia.setOnClickListener {
+            if (metricContainerIndia.visibility == VISIBLE) {
+                hideMetricContainerAnim()
+            } else {
+                showMetricContainerAnim()
+            }
+        }
+
     }
 
     private fun subscribeToObservers() {
@@ -340,7 +355,7 @@ class HeatMapFragment : Fragment(R.layout.fragment_heat_map), OnMapReadyCallback
     private fun setDefaultIndiaZoom() {
         map?.animateCamera(
             CameraUpdateFactory.newLatLngBounds(
-                Constants.countries_bb["IN"],
+                Constants.COUNTRIES_BOUDNING_BOX["IN"],
                 2
             )
         )
@@ -374,6 +389,63 @@ class HeatMapFragment : Fragment(R.layout.fragment_heat_map), OnMapReadyCallback
 
     private fun collapseRecyclerView() {
         toolbarIndia.collapseRecyclerView(250, orgHeight)
+    }
+
+
+    private fun showMetricContainerAnim() {
+        val xCenter = metricContainerIndia.right
+        val yCenter = metricContainerIndia.top
+
+        val startRadius = 0
+        val endRadius =
+            hypot(parent_container_india.width.toDouble(), parent_container_india.height.toDouble())
+
+        val revealAnim = ViewAnimationUtils.createCircularReveal(
+            metricContainerIndia,
+            xCenter, yCenter, startRadius.toFloat(), endRadius.toFloat()
+        )
+        metricContainerIndia.visibility = VISIBLE
+        revealAnim.interpolator = AccelerateInterpolator()
+        revealAnim.start()
+
+    }
+
+    private fun hideMetricContainerAnim() {
+        val xCenter = metricContainerIndia.right
+        val yCenter = metricContainerIndia.top
+
+        val startRadius = max(parent_container_india.width, parent_container_india.height)
+        val endRadius = 0
+
+        val hideAnim = ViewAnimationUtils.createCircularReveal(
+            metricContainerIndia,
+            xCenter, yCenter, startRadius.toFloat(), endRadius.toFloat()
+        )
+
+        hideAnim.doOnEnd {
+            metricContainerIndia.visibility = GONE
+        }
+        hideAnim.interpolator = AccelerateDecelerateInterpolator()
+
+//        val translateX = PropertyValuesHolder.ofFloat(
+//            View.TRANSLATION_X,
+//            icActionSettingsIndia.right - metricContainerIndia.right.toFloat()
+//        )
+//        val translateY = PropertyValuesHolder.ofFloat(
+//            View.TRANSLATION_Y,
+//            icActionSettingsIndia.top - metricContainerIndia.top.toFloat()
+//        )
+//
+//        val moveBackToOriginalPositionAnim =
+//            ObjectAnimator.ofPropertyValuesHolder(metricContainerIndia, translateX, translateY)
+//        moveBackToOriginalPositionAnim.interpolator = DecelerateInterpolator()
+//        moveBackToOriginalPositionAnim.duration = 50
+//
+//        moveBackToOriginalPositionAnim.doOnEnd {
+//            hideAnim.start()
+//        }
+
+        hideAnim.start()
     }
 
 
@@ -451,7 +523,7 @@ class HeatMapFragment : Fragment(R.layout.fragment_heat_map), OnMapReadyCallback
             for (region in data) {
                 try {
                     val layer = GeoJsonLayer(
-                        map, Constants.indian_regions[region.provinceState]!!,
+                        map, Constants.INDIAN_REGIONS[region.provinceState]!!,
                         context
                     )
                     Timber.d("${region.confirmed}")

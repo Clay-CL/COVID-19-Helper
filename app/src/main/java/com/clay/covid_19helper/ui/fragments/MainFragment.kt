@@ -1,11 +1,10 @@
 package com.clay.covid_19helper.ui.fragments
 
-import android.content.pm.ResolveInfo
+import android.content.Context
+import android.os.AsyncTask
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -13,19 +12,15 @@ import androidx.lifecycle.Observer
 import com.clay.covid_19helper.R
 import com.clay.covid_19helper.adapters.CovidSparkAdapter
 import com.clay.covid_19helper.models.CasesTimeSeries
+import com.clay.covid_19helper.models.StatesDaily
 import com.clay.covid_19helper.ui.MainActivity
 import com.clay.covid_19helper.ui.MainViewModel
-import com.clay.covid_19helper.util.Increase
-import com.clay.covid_19helper.util.Metric
-import com.clay.covid_19helper.util.Resource
-import com.clay.covid_19helper.util.TimeScale
-import com.robinhood.spark.animation.SparkAnimator
+import com.clay.covid_19helper.util.*
+import com.clay.covid_19helper.util.Constants.INDIAN_STATES
 import com.robinhood.ticker.TickerUtils
 import kotlinx.android.synthetic.main.fragment_main.*
 import timber.log.Timber
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -46,31 +41,40 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 is Resource.Success -> {
                     setUpEventListeners()
                     it.data?.let { indiaData ->
-                        // Create SparkAdapter
-                        // Add Graph functionality
-                        // TODO: Heat MAP
-
                         updateGraph(indiaData.casesTimeSeries)
-
                     }
                 }
-                is Resource.Error -> {
-
-                }
-                is Resource.Loading -> {
-
-                }
+                is Resource.Error -> { }
+                is Resource.Loading -> { }
             }
         })
 
-        viewModel.metricData.observe(viewLifecycleOwner, Observer {
-            it?.let {
+        viewModel.stateTimelineData.observe(viewLifecycleOwner, Observer {  stateResource->
+            when(stateResource) {
+                is Resource.Success -> {
+                    stateResource.data?.let {
+                        LoadStateDataInBackGround(viewModel, requireContext(), it.statesDaily).execute()
+                    }
+                }
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+            }
+        })
+
+        viewModel.metricData.observe(viewLifecycleOwner, Observer { metric ->
+            metric?.let {
                 updateRadioGroupMetrics(it)
                 updateColorSparkChart(it)
                 sparkAdapter.metric = it
-                viewModel.nationalCovidData.value?.data?.casesTimeSeries?.let {
-                    updateGraph(it)
+//                viewModel.nationalCovidData.value?.data?.casesTimeSeries?.let {
+//                    updateGraph(it)
+//                }
+
+                val selection = viewModel.selectedState.value!!
+                viewModel.mappingStatesCases.value?.get(selection)?.let { data->
+                    updateGraph(data)
                 }
+
             }
 
         })
@@ -79,7 +83,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             it?.let {
                 updateRadioGroupTimeScale(it)
                 sparkAdapter.daysAgo = it
-                sparkAdapter.notifyDataSetChanged()
+                val selection = viewModel.selectedState.value!!
+                viewModel.mappingStatesCases.value?.get(selection)?.let { data->
+                    updateGraph(data)
+                }
             }
 
         })
@@ -88,29 +95,32 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             it?.let {
                 updateRadioGroupIncrease(it)
                 sparkAdapter.increase = it
-                viewModel.nationalCovidData.value?.data?.casesTimeSeries?.let {
-                    updateGraph(it)
+                val selection = viewModel.selectedState.value!!
+                viewModel.mappingStatesCases.value?.get(selection)?.let { data->
+                    updateGraph(data)
                 }
             }
 
         })
 
-        viewModel.stateTimelineData.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Resource.Success -> {
-                    it.data?.let {
 
-                    }
-                }
-                is Resource.Error -> {
-
-                }
-                is Resource.Loading -> {
-
-                }
+        viewModel.selectedState.observe(viewLifecycleOwner, Observer { selectedState ->
+            //Timber.d("Selected State : $it")
+            radioButtonTotal.isEnabled = selectedState == 0
+            stateSpinner.selectedIndex = selectedState
+            viewModel.mappingStatesCases.value?.get(selectedState)?.let { data ->
+                Timber.d("Size: ${data.size} Selected State is $selectedState Data = $data")
+                updateGraph(data)
             }
+
         })
 
+
+
+    }
+
+    private fun updateSelectedState(selection: Int) {
+        viewModel.selectedState.postValue(selection)
     }
 
     private fun updateDisplayMetric(metric: Metric) {
@@ -164,14 +174,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun updateGraph(covidData: List<CasesTimeSeries>) {
         updateInfoForDate(covidData.last())
-        sparkAdapter.dailyNationalData = covidData
+        sparkAdapter.data = covidData
         sparkAdapter.notifyDataSetChanged()
     }
 
     private fun updateInfoForDate(covidData: CasesTimeSeries) {
-
-        Timber.d(covidData.dailyconfirmed)
-
 
         val numCases = when (sparkAdapter.increase) {
             Increase.DAILY -> {
@@ -186,7 +193,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     Metric.NEGATIVE -> covidData.totalrecovered
                     Metric.POSITIVE -> covidData.totalconfirmed
                     Metric.DEATH -> covidData.totaldeceased
-                }.toInt()
+                }?.toInt()
             }
         }
 
@@ -201,6 +208,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setUpAdapter() {
         sparkAdapter = CovidSparkAdapter()
         sparkChart.adapter = sparkAdapter
+        stateSpinner.attachDataSource(INDIAN_STATES)
 
     }
 
@@ -242,6 +250,80 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
         }
 
+        stateSpinner.setOnSpinnerItemSelectedListener { _, _, position, _ ->
+            updateSelectedState(position)
+        }
+
     }
+
+
+    class LoadStateDataInBackGround(
+        val viewModel: MainViewModel, context: Context, val statesDaily: List<StatesDaily>
+    ) : AsyncTask<Void, Void, Map<Int, List<CasesTimeSeries>>>() {
+
+
+        override fun doInBackground(vararg params: Void?): Map<Int, List<CasesTimeSeries>> {
+
+            val stateCasesMap = hashMapOf<Int, List<CasesTimeSeries>>()
+            viewModel.nationalCovidData.value?.data?.casesTimeSeries?.let { nationalList ->
+                stateCasesMap.put(
+                    0,
+                    nationalList
+                )
+            }
+
+
+            val statesDaily = statesDaily
+            val groupedStates = statesDaily.groupBy({ it.date }, { it })
+
+
+
+
+
+            for (i in 1 until INDIAN_STATES.size) {
+
+                val listOfCaseTimeSeries = mutableListOf<CasesTimeSeries>()
+                listOfCaseTimeSeries.clear()
+
+                groupedStates.asIterable().forEach { stateEntry ->
+
+                    val confirmedData = stateEntry.value[0].getDataAsList()
+                    val recoveredData = stateEntry.value[1].getDataAsList()
+                    val deceasedData = stateEntry.value[2].getDataAsList()
+
+                    val casesTimeSeries = CasesTimeSeries(
+                        "0",
+                        "0",
+                        "0",
+                        date = stateEntry.key,
+                        totalconfirmed = null,
+                        totaldeceased = null,
+                        totalrecovered = null
+                    )
+
+                    val dailyConfirmed = confirmedData[i-1]
+                    val dailyRecovered = recoveredData[i-1]
+                    val dailyDeceased = deceasedData[i-1]
+
+                    casesTimeSeries.dailyconfirmed = dailyConfirmed
+                    casesTimeSeries.dailyrecovered = dailyRecovered
+                    casesTimeSeries.dailydeceased = dailyDeceased
+
+                    listOfCaseTimeSeries.add(casesTimeSeries)
+
+                }
+                //Timber.d("For $i data is $listOfCaseTimeSeries")
+
+                stateCasesMap[i] = listOfCaseTimeSeries
+            }
+
+            return stateCasesMap
+        }
+
+        override fun onPostExecute(result: Map<Int, List<CasesTimeSeries>>?) {
+            viewModel.mappingStatesCases.postValue(result)
+        }
+    }
+
 
 }

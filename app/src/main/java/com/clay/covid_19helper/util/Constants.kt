@@ -22,7 +22,7 @@ object Constants {
 
     const val MAP_CAMERA_ZOOM = 5f
 
-    val countries_bb = object : HashMap<String, LatLngBounds>() {
+    val COUNTRIES_BOUDNING_BOX = object : HashMap<String, LatLngBounds>() {
         init {
             put(
                 "AW",
@@ -1007,7 +1007,7 @@ object Constants {
         }
     }
 
-    val indian_regions = object : HashMap<String, Int>(){
+    val INDIAN_REGIONS = object : HashMap<String, Int>(){
         init {
             put("Andhra Pradesh", R.raw.andhra_pradesh)
             put("Andaman and Nicobar Islands", R.raw.andaman_nicobar)
@@ -1046,6 +1046,48 @@ object Constants {
             put("West Bengal", R.raw.west_bengal)
         }
     }
+
+    val INDIAN_STATES = object:ArrayList<String>() {
+        init {
+            add("All Provinces")
+            add("Andaman and Nicobar Islands")
+            add("Andhra Pradesh")
+            add("Arunachal Pradesh")
+            add("Bihar")
+            add("Chandigarh")
+            add("Chattisgarh")
+            add("Daman and Diu")
+            add("Delhi")
+            add("Dadra and Nagar Haveli")
+            add("Goa")
+            add("Gujarat")
+            add("Haryana")
+            add("Himachal Pradesh")
+            add("Jammu and Kashmir")
+            add("Jharkhand")
+            add("Karnataka")
+            add("Kerala")
+            add("Ladakh")
+            add("Madhya Pradesh")
+            add("Maharashtra")
+            add("Manipur")
+            add("Meghalaya")
+            add("Mizoram")
+            add("Nagaland")
+            add("Odisha")
+            add("Puducherry")
+            add("Punjab")
+            add("Rajasthan")
+            add("Sikkim")
+            add("Tamil Nadu")
+            add("Telangana")
+            add("Tripura")
+            add("Uttar Pradesh")
+            add("Uttarakhand")
+            add("West Bengal")
+        }
+    }
+
 
 
 }
