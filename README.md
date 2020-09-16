@@ -6,6 +6,9 @@
 This is an App which makes use of [COVID-19 India API](https://api.covid19india.org/) to display the Daily Increase of Corona Virus Cases in India,
 Nationwide and State-wise. 
 
+Firstly, A Big Shout out and thanks to all medical staff working in the frontlines of this pandemic, some of who also sacrified their lives. God bless their effort.
+
+
 Originally it was taught by Rahul Pandey Sir, (check out his youtube tutorial [here](https://www.youtube.com/playlist?list=PL7NYbSE8uaBB1EiPYScD66ZVWyu6cOyrR))
 
 This app makes use of MVVM architecture and Kotlin Coroutines.
