@@ -28,11 +28,16 @@ Libraries used:
 - [Lottie Animations](https://github.com/airbnb/lottie-android)
 
 ### Screenshots:<br/>
-|<img src="/screenshots/splash_screen.png" height="512px"/>|<img src="screenshots/main_fragment_all_provinces.png" height="512px"/>|
-|:--:|:--:|
-|*Splash Screen*|*Main Fragment*|
+|<img src="/screenshots/splash_screen.png" height="512px"/>|<img src="screenshots/main_fragment_all_provinces.png" height="512px"/>|<img src="screenshots/main_fragment_total_cases.png" height="512px"/>|
+|:--:|:--:|:--:|
+|*Splash Screen*|*Main Fragment*|*Toggle between Daily and Total numbers*|
 
 You could view statistics for other provinces in India using the spinner,
-|<img src="/screenshots/main_fragment_spinner.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu.png" height="512px"/>|
+|<img src="/screenshots/main_fragment_spinner.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu_recovered.png" height="512px"/>|
 |:--:|:--:|:--:|
 |*Select a province*|*Tamil Nadu*|*Tamil Nadu Daily Recovered*|
+
+Also change between overall and monthly timeline view:
+|<img src="/screenshots/main_fragment_daily_deaths.png" height="512px"/>|<img src="screenshots/main_fragment_month_timeline.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu_recovered.png" height="512px"/>|
+|:--:|:--:|:--:|
+|*Daily death increase*|*Death increase over a month*|*Tamil Nadu Daily Recovered*|
