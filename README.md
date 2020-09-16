@@ -3,8 +3,7 @@
 
 <img src="https://img.shields.io/badge/kotlin-%230095D5.svg?&style=for-the-badge&logo=kotlin&logoColor=white"> 
 
-This is an App which makes use of [COVID-19 India API](https://api.covid19india.org/) and a few other APIs mentioned here, to display the Daily Increase of Corona Virus Cases in India,
-Nationwide and State-wise. 
+This is an App which makes use of [COVID-19 India API](https://api.covid19india.org/) and a few other APIs mentioned here, to display the Daily Increase of Corona Virus Cases in India, Nationwide and State-wise. All Glory to God for helping me in this and to my parents for their support. Thanks to [Yaswant Narayan](https://github.com/MINOSai) for his guidance. Also special thanks to [Ivan Jacob](https://www.linkedin.com/in/ivansaviojacob/) for helping me.
 
 <p align="center"><img src="/gifs/medical_staff.gif" width="300px" height="300px"></p>
 
@@ -70,3 +69,17 @@ Google Maps SDk for Android has a default class to overlay circles of a certain 
 |<img src="/screenshots/world_fragment.png" height="512px"/>|<img src="screenshots/world_fragment_search.png" height="512px"/>|<img src="screenshots/world_fragment_country_detail.png" height="512px"/>|
 |:--:|:--:|:--:|
 |*World Data*|*Search for a country*|*Detail stats for India*|
+
+And Finally, for the News Fragment.
+I've made use of the [NewsAPI](https://newsapi.org/)'s free tier. It's a really good API to use for incorporating news in your app.
+
+To view the article, I've made use of Google's [Chrome Custom Tab](https://developers.google.com/web/android/custom-tabs/implementation-guide).
+
+|<img src="/screenshots/news_fragment.png" height="512px"/>|<img src="screenshots/news_fragment_article_page.png " height="512px"/>|
+|:--:|:--:|
+|*News related to COVID-19*|*Viewing of article's cource*|
+
+Other Notable libraries which were helpful are:
+- [Timber](https://github.com/JakeWharton/timber) for logging, really good!
+- [JSON to Kotlin](https://plugins.jetbrains.com/plugin/9960-json-to-kotlin-class-jsontokotlinclass-), a plugin for Android Studio, really amazing!
+- [Glide](https://github.com/bumptech/glide) for image loading, highly recommended!
