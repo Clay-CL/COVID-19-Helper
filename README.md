@@ -38,6 +38,6 @@ You could view statistics for other provinces in India using the spinner,
 |*Select a province*|*Tamil Nadu*|*Tamil Nadu Daily Recovered*|
 
 Also change between overall and monthly timeline view:
-|<img src="/screenshots/main_fragment_daily_deaths.png" height="512px"/>|<img src="screenshots/main_fragment_month_timeline.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu_recovered.png" height="512px"/>|
-|:--:|:--:|:--:|
-|*Daily death increase*|*Death increase over a month*|*Tamil Nadu Daily Recovered*|
+|<img src="/screenshots/main_fragment_daily_deaths.png" height="512px"/>|<img src="screenshots/main_fragment_month_timeline.png" height="512px"/>|
+|:--:|:--:|
+|*Daily death increase*|*Death increase over a month*|
