@@ -6,6 +6,8 @@
 This is an App which makes use of [COVID-19 India API](https://api.covid19india.org/) to display the Daily Increase of Corona Virus Cases in India,
 Nationwide and State-wise. 
 
+<p align="center"><img src="/gifs/medical_staff.gif" width="300px" height="300px"></p>
+
 Firstly, A Big Shout out and thanks to all medical staff working in the frontlines of this pandemic, some of who also sacrified their lives. God bless their effort.
 
 
