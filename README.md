@@ -8,8 +8,7 @@ Nationwide and State-wise.
 
 <p align="center"><img src="/gifs/medical_staff.gif" width="300px" height="300px"></p>
 
-Firstly, A Big Shout out and thanks to all medical staff working in the frontlines of this pandemic, some of who also sacrified their lives. God bless their effort.
-
+Firstly, A Big Shout out and thanks to all medical staff, police and everyone working in the frontlines of this pandemic, some of who also sacrified their lives. God bless their effort.
 
 Originally it was taught by Rahul Pandey Sir, (check out his youtube tutorial [here](https://www.youtube.com/playlist?list=PL7NYbSE8uaBB1EiPYScD66ZVWyu6cOyrR))
 
@@ -32,3 +31,8 @@ Libraries used:
 |<img src="/screenshots/splash_screen.png" height="512px"/>|<img src="screenshots/main_fragment_all_provinces.png" height="512px"/>|
 |:--:|:--:|
 |*Splash Screen*|*Main Fragment*|
+
+You could view statistics for other provinces in India using the spinner,
+|<img src="/screenshots/main_fragment_spinner.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu.png" height="512px"/>|<img src="screenshots/main_fragment_tamil_nadu.png" height="512px"/>|
+|:--:|:--:|:--:|
+|*Select a province*|*Tamil Nadu*|*Tamil Nadu Daily Recovered*|
