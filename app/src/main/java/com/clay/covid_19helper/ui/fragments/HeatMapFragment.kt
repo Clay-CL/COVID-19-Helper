@@ -54,6 +54,8 @@ import kotlinx.android.synthetic.main.fragment_heat_map.mapView
 import timber.log.Timber
 import java.lang.Exception
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.hypot
 import kotlin.math.max
 
@@ -137,7 +139,10 @@ class HeatMapFragment : Fragment(R.layout.fragment_heat_map), OnMapReadyCallback
         tvConfirmedIndia.text = NumberFormat.getInstance().format(province.confirmed).toString()
         tvRecoveredIndia.text = NumberFormat.getInstance().format(province.recovered).toString()
         tvDeathIndia.text = NumberFormat.getInstance().format(province.deaths).toString()
-        tvDateIndia.text = province.lastUpdate.toString()
+        tvDateIndia.text = "As of ${SimpleDateFormat(
+            "dd-MM-yyy HH:mm",
+            Locale.getDefault()
+        ).format(Date(province.lastUpdate))} "
     }
 
 
