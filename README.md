@@ -3,7 +3,7 @@
 
 <img src="https://img.shields.io/badge/kotlin-%230095D5.svg?&style=for-the-badge&logo=kotlin&logoColor=white"> 
 
-This is an App which makes use of [COVID-19 India API](https://api.covid19india.org/) and a few other APIs mentioned here, to display the Daily Increase of Corona Virus Cases in India, Nationwide and State-wise. All Glory to God for helping me in this and to my parents for their support. Thanks to [Yaswant Narayan](https://github.com/MINOSai) for his guidance. Also special thanks to [Ivan Jacob](https://www.linkedin.com/in/ivansaviojacob/) for helping me.
+This is an App which makes use of [COVID-19 India API](https://api.covid19india.org/) and a few other APIs mentioned here, to display the Daily Increase of Corona Virus Cases in India, Nationwide and State-wise. All Glory to God for helping me in this and to my parents for their support.
 
 <p align="center"><img src="/gifs/medical_staff.gif" width="300px" height="300px"></p>
 
@@ -16,6 +16,8 @@ The clean architecture of the app was inspired by the [MVVM news App](https://ww
 by [Philipp Lackner](https://github.com/androiddevs18/MVVMNewsApp)
 
 A Big Shout-out and thanks to both of them, God Bless them. Do subscribe to both their YouTube channels!
+
+Thanks to [Yaswant Narayan](https://github.com/MINOSai) for his guidance. Also special thanks to [Ivan Jacob](https://www.linkedin.com/in/ivansaviojacob/) for helping me.
 
 UI is inspired by the Robinhood Stock Trading App.
 
