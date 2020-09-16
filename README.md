@@ -24,6 +24,6 @@ Libraries used:
 - [Lottie Animations](https://github.com/airbnb/lottie-android)
 
 ### Screenshots:<br/>
-|<img src="/screenshots/splash_screen.png" height="512px"/>|<img src="/screenshots/main_fragment.png" height="512px"/>|
+|<img src="/screenshots/splash_screen.png" height="512px"/>|<img src="screenshots/main_fragment_all_provinces.png" height="512px"/>|
 |:--:|:--:|
 |*Splash Screen*|*Main Fragment*|
