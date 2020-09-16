@@ -1,5 +1,5 @@
 # COVID-19-Helper
-<img src="https://img.shields.io/badge/version-v1.0.0-informational">
+<img src="https://img.shields.io/badge/version-v1.0.0-informational"> <img src="https://img.shields.io/badge/android-5.0%2B-success?style=plastic&logo=android">
 
 <img src="https://img.shields.io/badge/kotlin-%230095D5.svg?&style=for-the-badge&logo=kotlin&logoColor=white"> 
 
