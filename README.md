@@ -41,3 +41,15 @@ Also change between overall and monthly timeline view:
 |<img src="/screenshots/main_fragment_daily_deaths.png" height="512px"/>|<img src="screenshots/main_fragment_month_timeline.png" height="512px"/>|
 |:--:|:--:|
 |*Daily death increase*|*Death increase over a month*|
+
+In the Other Fragments,
+made use of Google Maps API v2, [SDk for android](https://developers.google.com/maps/documentation/android-sdk/overview)
+- India Fragment, used a Choropleth Plot to visualize the statistics
+- World Fragment, used a Bubble Chart
+
+For the Choropleth plot,
+1. I've obtained the Boundaries from OpenMaps API, in a .geojson format
+ <p align="center"><img src="http://marine.gov.scot/sites/default/files/styles/medium/public/openstreetmap.png?itok=luGfjZ5T"></p>
+ 
+ I've collected the boundary data from their [Nominatim Search Tool](https://nominatim.openstreetmap.org/ui/search.html) and then used the OSM Id and downloaded the .geojson polygon from this [download tool](http://polygons.openstreetmap.fr/). The files are very large, so to shrink them while preserving most of the structure, I used this [MapShaper](https://mapshaper.org/) an [OpenSource Tool](https://github.com/mbloch/mapshaper)
+
