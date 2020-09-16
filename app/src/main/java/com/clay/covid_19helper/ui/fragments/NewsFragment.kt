@@ -34,6 +34,7 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
         setupRecyclerView()
+        setUpEventListeners()
     }
 
     private fun subscribeToObservers() {
@@ -65,11 +66,13 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     }
 
     private fun hideProgressBar() {
+        swipeRefreshLayout.isRefreshing = false
         paginationProgressBar.visibility = View.INVISIBLE
         isLoading = false
     }
 
     private fun showProgressBar() {
+        swipeRefreshLayout.isRefreshing = true
         paginationProgressBar.visibility = View.VISIBLE
         isLoading = true
     }
@@ -118,6 +121,13 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(scrollListener)
+        }
+    }
+
+    private fun setUpEventListeners() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.newsPage = 1
+            viewModel.getNews(resources.getString(R.string.news_api_key))
         }
     }
 
