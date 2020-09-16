@@ -1,4 +1,4 @@
-# COVID-19-Helper
+# COVID-19 Helper and Info App
 <img src="https://img.shields.io/badge/version-v1.0.0-informational"> <img src="https://img.shields.io/badge/android-5.0%2B-success?style=plastic&logo=android">
 
 <img src="https://img.shields.io/badge/kotlin-%230095D5.svg?&style=for-the-badge&logo=kotlin&logoColor=white"> 
@@ -24,6 +24,6 @@ Libraries used:
 - [Lottie Animations](https://github.com/airbnb/lottie-android)
 
 ### Screenshots:<br/>
-|<img src="/screenshots/Splash%20Screen.png" height="512px"/>|<img src="/imgs/Main%20Fragment.png" height="512px"/>|
+|<img src="/screenshots/splash_screen.png" height="512px"/>|<img src="/screenshots/main_fragment.png" height="512px"/>|
 |:--:|:--:|
 |*Splash Screen*|*Main Fragment*|
