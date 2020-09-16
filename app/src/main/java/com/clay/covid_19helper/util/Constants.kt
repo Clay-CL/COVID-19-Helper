@@ -1049,7 +1049,7 @@ object Constants {
 
     val INDIAN_STATES = object:ArrayList<String>() {
         init {
-            add("All Provinces")
+            add("All Provinces (IN)")
             add("Andaman and Nicobar Islands")
             add("Andhra Pradesh")
             add("Arunachal Pradesh")
